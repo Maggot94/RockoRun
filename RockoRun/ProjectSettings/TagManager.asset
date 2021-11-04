@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Coin
   - Ground
+  - Letal
+  - ObstaclePool
+  - Tropiezo
   layers:
   - Default
   - TransparentFX

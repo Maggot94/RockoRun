@@ -14,9 +14,10 @@ public class Destroyer : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-       if (collision.gameObject.CompareTag("Letal") || collision.gameObject.CompareTag("Tropiezo"))
+       if (collision.gameObject.CompareTag("Letal") || collision.gameObject.CompareTag("Tropiezo") || collision.gameObject.CompareTag("Coin"))
         {
             collision.gameObject.transform.position = Pool.gameObject.transform.position;
+            
         }
     }
 }
