@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 5486693307269889694}
   - component: {fileID: 2992797046711885099}
   - component: {fileID: 7523264811951390292}
+  - component: {fileID: 4057204351640722160}
   m_Layer: 0
   m_Name: Interactivo-Basura toxica
   m_TagString: Letal
@@ -140,3 +141,16 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5.186616, y: 8.081958}
   m_EdgeRadius: 0
+--- !u!114 &4057204351640722160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7509390888280042195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46a18a5ab28272a40a6b4781b302edc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentSpawner: {fileID: 0}

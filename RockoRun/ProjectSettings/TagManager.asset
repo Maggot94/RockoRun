@@ -9,6 +9,7 @@ TagManager:
   - Letal
   - ObstaclePool
   - Tropiezo
+  - PlatformPool
   layers:
   - Default
   - TransparentFX

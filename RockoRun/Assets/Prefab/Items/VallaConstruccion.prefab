@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 6117346203720839634}
   - component: {fileID: 7343744895867910969}
   - component: {fileID: 8547394812398865818}
+  - component: {fileID: 5124481956514284971}
   m_Layer: 0
   m_Name: Interactivo-Valla construccion
   m_TagString: Tropiezo
@@ -140,3 +141,16 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 9.08, y: 10.88}
   m_EdgeRadius: 0
+--- !u!114 &5124481956514284971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5650889324779140107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46a18a5ab28272a40a6b4781b302edc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentSpawner: {fileID: 0}

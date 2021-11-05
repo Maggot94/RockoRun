@@ -13,12 +13,17 @@ public class Player : MonoBehaviour
     private float jumpForce;
 
     public bool isGrounded;
+
+    public int Coins;
+
+    public int Health = 2;
     // Start is called before the first frame update
     void Start()
     {
         rb = transform.GetComponent<Rigidbody2D>();
         rb.velocity = new Vector2(speed, 0);
         isGrounded = false;
+       
     }
     private void Update()
     {
@@ -28,6 +33,11 @@ public class Player : MonoBehaviour
         {
             Jump();
         }
+        if (Health <= 0)
+        {
+            StopAllCoroutines();
+            rb.velocity = new Vector2(0, 0);
+        }
         /*if (isGrounded)
         {
             rb.velocity = new Vector2(speed, 0);
@@ -36,7 +46,7 @@ public class Player : MonoBehaviour
     }
     public void Jump ()
     {
-        if (isGrounded)
+        if (isGrounded && Health > 0)
         { 
             rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
             isGrounded = false;
@@ -49,7 +59,22 @@ public class Player : MonoBehaviour
     {
         if (collision.CompareTag("Coin"))
         {
-            Destroy(collision.gameObject);
+            collision.GetComponent<Obstacle>().currentSpawner.deSpawn();
+            Coins++;
+
+        }
+        if (collision.CompareTag("Tropiezo"))
+        {
+            collision.GetComponent<Obstacle>().currentSpawner.deSpawn();
+            Health--;
+            StartCoroutine(RestoreHealth());
+
+        }
+        if (collision.CompareTag("Letal"))
+        {
+            collision.GetComponent<Obstacle>().currentSpawner.deSpawn();
+            Health = 0;
+
         }
     }
 
@@ -70,6 +95,13 @@ public class Player : MonoBehaviour
 
         return position;
     }
+
+    IEnumerator RestoreHealth()
+    {
+        yield return new WaitForSeconds(6f);
+        Health = 2;
+    }
+ 
 }
 
 

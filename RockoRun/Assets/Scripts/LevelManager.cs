@@ -29,6 +29,7 @@ public class LevelManager : MonoBehaviour
 
         objectToSpawn = poolBlock.transform.GetChild(Random.Range(0, poolBlock.transform.childCount)).gameObject;
         objectToSpawn.transform.position = firstEndPosition.position;
+        objectToSpawn.GetComponent<LevelBlock>().SpawnObstacles();
         ActiveBlocks[2] = objectToSpawn;
        
     }
@@ -46,11 +47,13 @@ public class LevelManager : MonoBehaviour
             objectToSpawn = poolBlock.transform.GetChild(Random.Range(0, poolBlock.transform.childCount)).gameObject;
         } while (objectToSpawn.transform.position != poolBlock.transform.position);
 
-        objectToSpawn.transform.position = ActiveBlocks[2].GetComponent<LevelBlock>().EndPoint.position; 
+        objectToSpawn.transform.position = ActiveBlocks[2].GetComponent<LevelBlock>().EndPoint.position;
+        objectToSpawn.GetComponent<LevelBlock>().SpawnObstacles();
 
             if (ActiveBlocks[0] != null)
             {
                 ActiveBlocks[0].transform.position = poolBlock.transform.position;
+                ActiveBlocks[0].GetComponent<LevelBlock>().DespawnRemainingObstacles();
             }
         ActiveBlocks[0] = ActiveBlocks[1];
         ActiveBlocks[1] = ActiveBlocks[2];

@@ -18,4 +18,21 @@ public class LevelBlock : MonoBehaviour
     {
         
     }
+
+    public void SpawnObstacles()
+    {
+        foreach (SpawnObstaculos s in SO)
+        {
+            s.Spawn();
+        }
+    }
+
+    public void DespawnRemainingObstacles()
+    {
+        foreach (SpawnObstaculos s in SO)
+        {
+            s.deSpawn();
+        }
+    }
+
 }

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1851894908099760022}
   - component: {fileID: 155050568316986098}
   - component: {fileID: 7015508383349748750}
+  - component: {fileID: 2484905291005355769}
   m_Layer: 0
   m_Name: Interactivo-Pollo envenenado
   m_TagString: Letal
@@ -109,6 +110,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 8.283081, y: 15.931629}
   m_EdgeRadius: 0
+--- !u!114 &2484905291005355769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2933815457305710522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46a18a5ab28272a40a6b4781b302edc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentSpawner: {fileID: 0}
 --- !u!1 &4325057036295867809
 GameObject:
   m_ObjectHideFlags: 0
