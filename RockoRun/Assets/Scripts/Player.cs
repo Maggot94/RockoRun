@@ -11,18 +11,27 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private float jumpForce;
+    [SerializeField]
+    private float slideForce;
 
     public bool isGrounded;
 
     public int Coins;
 
     public int Health = 2;
+
+    public bool invencible;
+
+    private bool Sliding;
+
+    public bool magnet;
     // Start is called before the first frame update
     void Start()
     {
         rb = transform.GetComponent<Rigidbody2D>();
         rb.velocity = new Vector2(speed, 0);
         isGrounded = false;
+        StartCoroutine(speedUpPlayer());
        
     }
     private void Update()
@@ -38,6 +47,11 @@ public class Player : MonoBehaviour
             StopAllCoroutines();
             rb.velocity = new Vector2(0, 0);
         }
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            Slide();
+        }
+
         /*if (isGrounded)
         {
             rb.velocity = new Vector2(speed, 0);
@@ -63,18 +77,39 @@ public class Player : MonoBehaviour
             Coins++;
 
         }
-        if (collision.CompareTag("Tropiezo"))
+        if (collision.CompareTag("Tropiezo") && !invencible)
         {
             collision.GetComponent<Obstacle>().currentSpawner.deSpawn();
             Health--;
             StartCoroutine(RestoreHealth());
-
         }
-        if (collision.CompareTag("Letal"))
+        if (collision.CompareTag("Letal") && !invencible)
         {
             collision.GetComponent<Obstacle>().currentSpawner.deSpawn();
             Health = 0;
+        }
+        if (collision.CompareTag("Slide") && !invencible)
+        {
+            if (!Sliding)
+            {
+                collision.GetComponent<Obstacle>().currentSpawner.deSpawn();
+                Health--;
+                StartCoroutine(RestoreHealth());
+            }
+        }
+        if (collision.CompareTag("Boost"))
+        {
+            collision.GetComponent<Obstacle>().currentSpawner.deSpawn();
+            invencible = true;
+            rb.velocity = new Vector2(speed + 10, 0);
+            StartCoroutine(endBoost());
+        }
 
+        if (collision.CompareTag("Iman"))
+        {
+            collision.GetComponent<Obstacle>().currentSpawner.deSpawn();
+            magnet = true;
+            StartCoroutine(endMagnet());
         }
     }
 
@@ -83,7 +118,13 @@ public class Player : MonoBehaviour
      if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
-            rb.velocity = new Vector2(speed, 0);
+            if (!invencible)
+            {
+               rb.velocity = new Vector2(speed, 0);
+            } else
+            {
+              rb.velocity = new Vector2(speed + 10, 0);
+            }
         }  
     }
  
@@ -101,7 +142,46 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(6f);
         Health = 2;
     }
- 
+
+    public void Slide ()
+    {
+       
+       if(!Sliding)
+        {
+            Sliding = true;
+            rb.velocity = new Vector2(rb.velocity.x + slideForce, 0);
+            StartCoroutine(endSlide());
+
+        }
+    }
+    IEnumerator endSlide ()
+    {
+        yield return new WaitForSeconds(.5f);
+        rb.velocity = new Vector2(speed, 0);
+        Sliding = false;
+
+    }
+    IEnumerator endBoost()
+    {
+        yield return new WaitForSeconds(3f);
+        rb.velocity = new Vector2(speed, 0);
+        invencible = false;
+
+    }
+    IEnumerator endMagnet()
+    {
+        yield return new WaitForSeconds(8f);
+        magnet = false;
+
+    }
+    IEnumerator speedUpPlayer()
+    {
+        yield return new WaitForSeconds(20f);
+        speed = speed + 3;
+        rb.velocity = new Vector2(speed, 0);
+        StartCoroutine(speedUpPlayer());
+
+    }
 }
 
 

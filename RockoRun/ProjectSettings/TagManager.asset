@@ -10,6 +10,10 @@ TagManager:
   - ObstaclePool
   - Tropiezo
   - PlatformPool
+  - Slide
+  - Boost
+  - Iman
+  - Angel
   layers:
   - Default
   - TransparentFX
