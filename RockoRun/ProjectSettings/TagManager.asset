@@ -14,6 +14,7 @@ TagManager:
   - Boost
   - Iman
   - Angel
+  - Projectile
   layers:
   - Default
   - TransparentFX

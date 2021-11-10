@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -25,6 +26,18 @@ public class Player : MonoBehaviour
     private bool Sliding;
 
     public bool magnet;
+
+    private Animator anim;
+
+    [SerializeField]
+    private Text CoinsTxt;
+
+    [SerializeField]
+    private Text CoinsTxtGO;
+
+    public UI_Manager UI;
+
+    public Homero H;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,13 +45,14 @@ public class Player : MonoBehaviour
         rb.velocity = new Vector2(speed, 0);
         isGrounded = false;
         StartCoroutine(speedUpPlayer());
+        anim = gameObject.GetComponent<Animator>();
        
     }
     private void Update()
     {
         
         //Salto
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
         {
             Jump();
         }
@@ -50,6 +64,12 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             Slide();
+        }
+        if (Health == 0)
+        {
+            anim.SetInteger("State", 2);
+            UI.showGameOverPanel();
+
         }
 
         /*if (isGrounded)
@@ -64,6 +84,7 @@ public class Player : MonoBehaviour
         { 
             rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
             isGrounded = false;
+            anim.SetInteger("State", 1);
         }
         //rb.velocity = new Vector2(0, jumpForce);
     }
@@ -75,12 +96,15 @@ public class Player : MonoBehaviour
         {
             collision.GetComponent<Obstacle>().currentSpawner.deSpawn();
             Coins++;
+            CoinsTxt.text = Coins.ToString();
+            CoinsTxtGO.text = Coins.ToString();
 
         }
         if (collision.CompareTag("Tropiezo") && !invencible)
         {
             collision.GetComponent<Obstacle>().currentSpawner.deSpawn();
             Health--;
+            H.EntranceExit(true);
             StartCoroutine(RestoreHealth());
         }
         if (collision.CompareTag("Letal") && !invencible)
@@ -94,6 +118,7 @@ public class Player : MonoBehaviour
             {
                 collision.GetComponent<Obstacle>().currentSpawner.deSpawn();
                 Health--;
+                H.EntranceExit(true);
                 StartCoroutine(RestoreHealth());
             }
         }
@@ -118,6 +143,7 @@ public class Player : MonoBehaviour
      if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
+            anim.SetInteger("State", 0);
             if (!invencible)
             {
                rb.velocity = new Vector2(speed, 0);
@@ -140,6 +166,7 @@ public class Player : MonoBehaviour
     IEnumerator RestoreHealth()
     {
         yield return new WaitForSeconds(6f);
+        H.EntranceExit(false);
         Health = 2;
     }
 
@@ -149,6 +176,7 @@ public class Player : MonoBehaviour
        if(!Sliding)
         {
             Sliding = true;
+            anim.SetInteger("State", 3);
             rb.velocity = new Vector2(rb.velocity.x + slideForce, 0);
             StartCoroutine(endSlide());
 
@@ -157,6 +185,7 @@ public class Player : MonoBehaviour
     IEnumerator endSlide ()
     {
         yield return new WaitForSeconds(.5f);
+        anim.SetInteger("State", 0);
         rb.velocity = new Vector2(speed, 0);
         Sliding = false;
 
